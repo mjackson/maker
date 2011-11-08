@@ -90,6 +90,19 @@
     }
 
     /**
+     * Adds a class name to any previous value that may already exist.
+     */
+    Maker.prototype.addClass = function (value) {
+        var className = this.attributes["class"];
+
+        if (className) {
+            return this.className(className + " " + value);
+        }
+
+        return this.className(value);
+    }
+
+    /**
      * Sugar for setAttribute("text", value).
      */
     Maker.prototype.text = function (value) {
