@@ -13,8 +13,10 @@ $("body").make("div", function (div) {
             span.className("good-advice");
             span.text("If you haven't already, you should sign up for ");
         });
+        // Could also have used:
+        // p.span({"class": "good-advice"}, "If you haven't already, you should sign up for ");
         p.a({href: "http://www.twitter.com"}, function (a) {
-            a.em("Twitter");
+            a.strong("Twitter");
         }).click(function () {
             return confirm("Are you sure you want to do this?");
         });
