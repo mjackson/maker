@@ -65,8 +65,8 @@
     }
 
     /**
-     * Creates a new Maker and appends it as a child of this Maker. See
-     * makeMaker.
+     * Creates a new Maker, appends it as a child of this Maker, and returns
+     * this Maker. See makeMaker.
      */
     Maker.prototype.make = function (tagName, attributes, callback) {
         var maker = makeMaker(tagName, attributes, callback);
@@ -75,7 +75,7 @@
     }
 
     /**
-     * Sets the attribute with the given `name`.
+     * Sets the attribute with the given `name` and returns this Maker.
      */
     Maker.prototype.attr = function (name, value) {
         this.attributes[name] = value;
@@ -90,7 +90,8 @@
     }
 
     /**
-     * Adds a class name to any previous value that may already exist.
+     * Adds a class name to any previous value that may already exist and
+     * returns this Maker.
      */
     Maker.prototype.addClass = function (value) {
         var className = this.attributes["class"];
@@ -103,7 +104,7 @@
     }
 
     /**
-     * Binds the event with the given `name`.
+     * Binds the event with the given `name` and returns this Maker.
      */
     Maker.prototype.bind = function (name, data, handler) {
         this.events.push(arguments);
@@ -114,6 +115,40 @@
      * Sugar for bind.
      */
     Maker.prototype.on = Maker.prototype.bind;
+
+    var childMap = {
+        "ol": "li",
+        "ul": "li",
+        "table": "tr",
+        "thead": "tr",
+        "tbody": "tr",
+        "tr", "td",
+        "select", "option"
+    };
+
+    /**
+     * Used to easily create one child Maker for each element of the given
+     * `array`, the tagName of which is determined by this Maker's tagName. For
+     * example, if this Maker is a "ul", the child will be an "li". Likewise, a
+     * "select" yields "option" elements, etc.
+     *
+     * The callback is called with three arguments: 1) the item in the array, 2)
+     * the new child Maker object and 3) the index of the item in the original
+     * array. Returns this Maker.
+     *
+     *     ul.map(items, function (item, li, index) {
+     *         // ...
+     *     });
+     */
+    Maker.prototype.map = function (array, callback) {
+        var tagName = childMap[this.tagName] || "div";
+
+        for (var i = 0, len = array.length; i < len; ++i) {
+            callback(array[i], this.make(tagName), i);
+        }
+
+        return this;
+    }
 
     /**
      * Returns an array of tokens that represent the HTML markup of this Maker.
