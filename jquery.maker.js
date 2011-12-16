@@ -213,9 +213,14 @@
     // Expose.
     $.Maker = Maker;
 
-    $.fn.make = function (tagName, attributes, callback) {
+
+    $.make = function (tagName, attributes, callback) {
         var maker = makeMaker(tagName, attributes, callback);
-        return this.append(maker.toObj());
-    }
+        return maker.toObj();
+    };
+
+    $.fn.make = function (tagName, attributes, callback) {
+        return this.append($.make(tagName, attributes, callback));
+    };
 
 })(jQuery);
