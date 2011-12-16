@@ -13,6 +13,10 @@
      * Escapes all special HTML characters in the given `string`.
      */
     function escapeHTML(string) {
+        if (string == null) {
+            return "";
+        }
+
         return String(string)
             .replace(/&(?!\w+;)/g, "&amp;")
             .replace(/</g, "&lt;")
