@@ -213,10 +213,8 @@
     // Expose.
     $.Maker = Maker;
 
-
     $.make = function (tagName, attributes, callback) {
-        var maker = makeMaker(tagName, attributes, callback);
-        return maker.toObj();
+        return makeMaker(tagName, attributes, callback).toObj();
     };
 
     $.fn.make = function (tagName, attributes, callback) {
