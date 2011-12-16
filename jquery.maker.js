@@ -9,21 +9,16 @@
     // All known jQuery event names, per jQuery 1.7.
     var eventNames = "blur focus focusin focusout load resize scroll unload click dblclick mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave change select submit keydown keypress keyup error contextmenu".split(" ");
 
-    var escapeMap = {
-       "<": "&lt;",
-       ">": "&gt;",
-       "&": "&amp;",
-       '"': "&#34;",
-       "'": "&#39;"
-    };
-
     /**
-     * Escapes all special HTML characters in the given `text`.
+     * Escapes all special HTML characters in the given `string`.
      */
-    function escapeHTML(text) {
-        return String(text).replace(/[<>'"&]/g, function (c) {
-            return escapeMap[c];
-        });
+    function escapeHTML(string) {
+        return String(string)
+            .replace(/&(?!\w+;)/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#39;");
     }
 
     var div = document.createElement("div");
