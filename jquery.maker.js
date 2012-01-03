@@ -71,7 +71,7 @@
         var maker = makeMaker(tagName, attributes, callback);
         this.children.push(maker);
         return maker;
-    }
+    };
 
     /**
      * Sets the attribute with the given `name` and returns this Maker.
@@ -79,7 +79,7 @@
     Maker.prototype.attr = function (name, value) {
         this.attributes[name] = value;
         return this;
-    }
+    };
 
     /**
      * Set inner text.
@@ -109,7 +109,7 @@
         }
 
         return this.attr("class", value);
-    }
+    };
 
     /**
      * Binds the event with the given `name` and returns this Maker.
@@ -117,7 +117,7 @@
     Maker.prototype.bind = function (name, data, handler) {
         this.events.push(arguments);
         return this;
-    }
+    };
 
     /**
      * Sugar for bind.
@@ -156,7 +156,7 @@
         }
 
         return this;
-    }
+    };
 
     /**
      * Returns an array of tokens that represent the HTML markup of this Maker.
@@ -198,14 +198,14 @@
         markup.push("</", this.tagName, ">");
 
         return markup;
-    }
+    };
 
     /**
      * Returns the HTML of this Maker. All arguments are for internal use only.
      */
     Maker.prototype.toHTML = function (events) {
         return this.toMarkup(events).join("");
-    }
+    };
 
     /**
      * Returns a jQuery object that represents this Maker, with all events
@@ -227,7 +227,7 @@
         }
 
         return $obj;
-    }
+    };
 
     for (var i = 0, len = attrNames.length; i < len; ++i) {
         (function (attrName) {
@@ -235,7 +235,7 @@
                 return this.attr(attrName, value);
             }
         })(attrNames[i]);
-    }
+    };
 
     for (var i = 0, len = eventNames.length; i < len; ++i) {
         (function (eventName) {
@@ -243,7 +243,7 @@
                 return this.bind(eventName, data, handler);
             }
         })(eventNames[i]);
-    }
+    };
 
     for (var i = 0, len = tagNames.length; i < len; ++i) {
         (function (tagName) {
@@ -251,7 +251,7 @@
                 return this.make(tagName, attributes, callback);
             }
         })(tagNames[i]);
-    }
+    };
 
     // Expose.
     $.Maker = Maker;
