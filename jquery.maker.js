@@ -130,8 +130,8 @@
         "table": "tr",
         "thead": "tr",
         "tbody": "tr",
-        "tr", "td",
-        "select", "option"
+        "tr": "td",
+        "select": "option"
     };
 
     /**
