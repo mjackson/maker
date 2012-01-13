@@ -9,6 +9,14 @@
     // All known jQuery event names, per jQuery 1.7.
     var eventNames = "blur focus focusin focusout load resize scroll unload click dblclick mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave change select submit keydown keypress keyup error contextmenu".split(" ");
 
+    var escapeMap = {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': '&quot;',
+        "'": '&#39;'
+    };
+
     /**
      * Escapes all special HTML characters in the given `string`.
      */
@@ -17,12 +25,9 @@
             return "";
         }
 
-        return String(string)
-            .replace(/&(?!\w+;)/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#39;");
+        return String(string).replace(/&(?!\w+;)|[<>"']/g, function (s) {
+            return escapeMap[s] || s;
+        });
     }
 
     var div = document.createElement("div");
@@ -36,16 +41,16 @@
     }
 
     function makeMaker(tagName, attributes, callback) {
-        if (arguments.length == 1) {
+        if (arguments.length === 1) {
             attributes = {};
-        } else if (typeof attributes == "function") {
+        } else if (typeof attributes === "function") {
             callback = attributes;
             attributes = {};
         }
 
         var maker = new Maker(tagName, attributes);
 
-        if (typeof callback == "function") {
+        if (typeof callback === "function") {
             callback(maker);
         }
 
@@ -53,7 +58,7 @@
     }
 
     function Maker(tagName, attributes) {
-        if (typeof attributes == "string") {
+        if (typeof attributes === "string") {
             attributes = {"class": attributes};
         }
 
