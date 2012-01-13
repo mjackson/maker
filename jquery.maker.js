@@ -261,12 +261,22 @@
     // Expose.
     $.Maker = Maker;
 
+    /**
+     * Creates a Maker with the given arguments, converts it to a jQuery object,
+     * and returns it.
+     */
     $.make = function (tagName, attributes, callback) {
         return makeMaker(tagName, attributes, callback).toObj();
     };
 
+    /**
+     * Creates a Maker with the given arguments and appends it to this jQuery
+     * object. Returns the newly created child jQuery object.
+     */
     $.fn.make = function (tagName, attributes, callback) {
-        return this.append($.make(tagName, attributes, callback));
+        var $obj = $.make(tagName, attributes, callback);
+        this.append($obj);
+        return $obj;
     };
 
 })(jQuery);
